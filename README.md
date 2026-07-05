@@ -14,7 +14,7 @@ En un contexto de laboratorio, múltiples cepas pueden ser secuenciadas, pero no
 - ERR1554590 (Lp813)
 - ERR1554591 (Lp998)
 
-Pipeline bioinformático:
+## Pipeline bioinformático:
 
 ```text
 FASTQ
@@ -32,8 +32,19 @@ Script de análisis
 Tablas + Reporte final
 ```
 
+Pasos de ejecucion:
 
-Metricas evaluadas:
+##  Ejecución del pipeline
+
+1. Colocar archivos FASTQ en `/data`
+2. Ejecutar alineamiento con BWA MEM
+3. Convertir SAM a BAM con samtools
+4. Ordenar e indexar BAM
+5.  Ejecutar script de análisis:
+
+
+## Metricas evaluadas:
+
 Tabla 1: Calidad de alineamiento
 - Total de lecturas
 - Lecturas mapeadas
@@ -46,7 +57,8 @@ Tabla 2: Calidad de alineamiento
 - Lecturas con MAPQ ≥ 30
 - Clasificación de calidad
 
-Resultado principal --> La cepa con mejor desempeño global fue:
+## Resultado principal 
+La cepa con mejor desempeño global fue:
 ERR1554591
 Esta cepa presentó:
 - Mayor porcentaje de alineamiento
@@ -68,14 +80,14 @@ proyecto_LAB/
 └── scripts/
 ```
 
-Herramientas utilizadas:
+## Herramientas utilizadas:
 - BWA
 - SAMtools
 - Bash scripting
 - Linux (Cloud Shell)
 - FastQ / BAM format analysis
 
-Autoria:
+## Autoria:
 Ivanna Alexandra Canales Araujo y Anadia Nicool Quispe Zamata
 
 Nota final: Este análisis es una aproximación bioinformática basada en métricas de alineamiento y no representa validación experimental directa del rendimiento fermentativo de las cepas.

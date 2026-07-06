@@ -87,6 +87,68 @@ proyecto_LAB/
 - Linux (Cloud Shell)
 - FastQ / BAM format analysis
 
+
+
+## 📜 Script 2: `tablas_bam.sh`
+
+Este script automatiza el análisis de los archivos **BAM** generados tras el alineamiento de las tres cepas de *Lactiplantibacillus plantarum*.
+
+### Funciones principales
+
+- Verifica que exista el directorio de alineamientos.
+- Recorre automáticamente todos los archivos `.sorted.bam`.
+- Calcula métricas de alineamiento mediante **SAMtools**.
+- Obtiene el porcentaje de lecturas alineadas.
+- Calcula el **MAPQ promedio** de cada cepa.
+- Cuenta las lecturas con **MAPQ ≥ 30**.
+- Genera dos tablas comparativas.
+- Selecciona automáticamente la cepa con mejor calidad de alineamiento.
+- Crea el reporte final `reporte_bam.txt`.
+
+### Código - bases para entender su funcionamiento y objetivo
+
+```bash
+#!/bin/bash
+
+# Proyecto: Análisis de cepas de Lactiplantibacillus plantarum
+# Autoras: Ivanna Alexandra y Anadia Nicool
+
+BAM_DIR="../alingment"
+OUT="../results/reporte_bam.txt"
+
+# Verificar que exista el directorio de alineamientos
+if [ ! -d "$BAM_DIR" ]; then
+    echo "No se encontró el directorio de alineamientos."
+    exit 1
+fi
+
+# Analizar automáticamente cada archivo BAM
+for bam in "$BAM_DIR"/*.sorted.bam
+do
+    cepa=$(basename "$bam" .sorted.bam)
+
+    total=$(samtools view -c "$bam")
+    mapped=$(samtools view -F 4 -c "$bam")
+    unmapped=$(samtools view -f 4 -c "$bam")
+
+    mapq=$(samtools view "$bam" | \
+        awk '{s+=$5;n++} END{if(n>0) printf "%.2f",s/n}')
+
+    mapq30=$(samtools view "$bam" | \
+        awk '$5>=30{c++} END{print c+0}')
+
+    # Generación automática de tablas y reporte
+done
+```
+
+> **Nota:** El código completo del script se encuentra en `scripts/tablas_bam.sh`.
+
+
+
+
+
+
+
 ## Autoria:
 Ivanna Alexandra Canales Araujo y Anadia Nicool Quispe Zamata
 
